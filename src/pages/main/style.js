@@ -28,7 +28,10 @@ export const Form = styled.form`
     font-size: 20px;
   }
 `;
-export const SubButton = styled.button`
+export const SubButton = styled.button.attrs(props => ({
+  type: 'submit',
+  disabled: props.loading,
+}))`
   padding: 0 15px;
   background: #7159c1;
   border: 0;
@@ -37,4 +40,9 @@ export const SubButton = styled.button`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  &[disabled] {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
 `;
