@@ -46,3 +46,5 @@ export const SubButton = styled.button.attrs(props => ({
     opacity: 0.6;
   }
 `;
+
+export const List = styled.ul``;

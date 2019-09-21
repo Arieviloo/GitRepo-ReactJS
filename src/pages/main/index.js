@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { FaGithub, FaTerminal } from 'react-icons/fa';
 import api from '../../sevice/api';
-import { Container, Form, SubButton } from './style';
+import { Container, Form, SubButton, List } from './style';
 
 class Main extends Component {
   state = {
@@ -34,7 +34,7 @@ class Main extends Component {
   };
 
   render() {
-    const { newRepo, loading } = this.state;
+    const { newRepo, repositories, loading } = this.state;
     return (
       <Container>
         <h1>
@@ -52,6 +52,14 @@ class Main extends Component {
             <FaTerminal color="#fff" size="14" />
           </SubButton>
         </Form>
+
+        <List>
+          {repositories.map(repositories => (
+            <li key={repositories.name}>
+              <span>{repositories.name}</span>
+            </li>
+          ))}
+        </List>
       </Container>
     );
   }
