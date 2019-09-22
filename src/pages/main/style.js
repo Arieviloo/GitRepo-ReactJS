@@ -47,4 +47,14 @@ export const SubButton = styled.button.attrs(props => ({
   }
 `;
 
-export const List = styled.ul``;
+export const List = styled.ul`
+  list-style: none;
+
+  li {
+    margin-top: 20px;
+    span {
+      font-size: 20px;
+      padding: 10px;
+    }
+  }
+`;
