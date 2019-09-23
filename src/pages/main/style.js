@@ -10,7 +10,7 @@ export const Form = styled.form`
     border-radius: 4px;
     font-size: 20px;
     &[error] {
-      border-color: red;
+      border: 1px solid #e74c3c;
     }
   }
 `;

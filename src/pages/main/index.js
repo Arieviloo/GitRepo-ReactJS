@@ -10,6 +10,7 @@ class Main extends Component {
     newRepo: ``,
     repositories: [],
     loading: false,
+    error: false,
   };
 
   componentDidMount() {
@@ -32,10 +33,17 @@ class Main extends Component {
 
   handleSubmit = async e => {
     e.preventDefault();
-    try {
-      this.setState({ loading: true });
+    this.setState({ loading: true, error: false });
 
+    try {
       const { newRepo, repositories } = this.state;
+
+      const hasRepo = repositories.find(r => r.name === newRepo);
+
+      if (hasRepo) {
+        throw new Error('Repositório duplicado');
+      }
+
       const response = await api.get(`/repos/${newRepo}`);
 
       const data = {
@@ -45,15 +53,16 @@ class Main extends Component {
       this.setState({
         repositories: [...repositories, data],
         newRepo: '',
-        loading: false,
       });
     } catch (error) {
-      console.log('error', error);
+      this.setState({ error: true });
+    } finally {
+      this.setState({ loading: false });
     }
   };
 
   render() {
-    const { newRepo, repositories, loading } = this.state;
+    const { newRepo, repositories, loading, error } = this.state;
     return (
       <Container>
         <h1>
@@ -66,6 +75,7 @@ class Main extends Component {
             placeholder="Manda ai"
             value={newRepo}
             onChange={this.handleInput}
+            className={error && 'error'}
           />
           <SubButton loading={loading}>
             <FaTerminal color="#fff" size="14" />
