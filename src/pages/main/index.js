@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { FaGithub, FaTerminal } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import api from '../../sevice/api';
-import { Container, Form, SubButton, List } from './style';
+import { Form, SubButton, List } from './style';
+import Container from '../../components/Container/style';
 
 class Main extends Component {
   state = {
@@ -31,21 +32,24 @@ class Main extends Component {
 
   handleSubmit = async e => {
     e.preventDefault();
+    try {
+      this.setState({ loading: true });
 
-    this.setState({ loading: true });
+      const { newRepo, repositories } = this.state;
+      const response = await api.get(`/repos/${newRepo}`);
 
-    const { newRepo, repositories } = this.state;
-    const response = await api.get(`/repos/${newRepo}`);
+      const data = {
+        name: response.data.full_name,
+      };
 
-    const data = {
-      name: response.data.full_name,
-    };
-
-    this.setState({
-      repositories: [...repositories, data],
-      newRepo: '',
-      loading: false,
-    });
+      this.setState({
+        repositories: [...repositories, data],
+        newRepo: '',
+        loading: false,
+      });
+    } catch (error) {
+      console.log('error', error);
+    }
   };
 
   render() {

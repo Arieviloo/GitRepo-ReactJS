@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
 import api from '../../sevice/api';
+import { Loading, Owner } from './style';
+import Container from '../../components/Container/style';
 
 class Repository extends Component {
   // eslint-disable-next-line
@@ -37,7 +40,20 @@ class Repository extends Component {
   render() {
     // eslint-disable-next-line
     const { repository, issues, loading } = this.state;
-    return <h1>Repository:</h1>;
+
+    if (loading) {
+      return <Loading>Carregando</Loading>;
+    }
+    return (
+      <Container>
+        <Owner>
+          <Link to="/">Voltar aos repositórios</Link>
+          <img src={repository.owner.avatar_url} alt={repository.owner.login} />
+          <h1>{repository.name}</h1>
+          <p>{repository.description}</p>
+        </Owner>
+      </Container>
+    );
   }
 }
 
