@@ -49,12 +49,25 @@ export const SubButton = styled.button.attrs(props => ({
 
 export const List = styled.ul`
   list-style: none;
+  margin-top: 30px;
 
   li {
-    margin-top: 20px;
+    padding: 15px 0px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    & + li {
+      border-top: 1px solid #eee;
+    }
+
+    a {
+      color: #7159c1;
+      text-decoration: none;
+    }
     span {
       font-size: 20px;
-      padding: 10px;
     }
   }
 `;

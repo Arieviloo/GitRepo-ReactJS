@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { FaGithub, FaTerminal } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import api from '../../sevice/api';
 import { Container, Form, SubButton, List } from './style';
 
@@ -9,6 +10,20 @@ class Main extends Component {
     repositories: [],
     loading: false,
   };
+
+  componentDidMount() {
+    const repositories = localStorage.getItem('repositories');
+    if (repositories) {
+      this.setState({ repositories: JSON.parse(repositories) });
+    }
+  }
+
+  componentDidUpdate(_, prevState) {
+    const { repositories } = this.state;
+    if (prevState.repositories !== repositories) {
+      localStorage.setItem('repositories', JSON.stringify(repositories));
+    }
+  }
 
   handleInput = e => {
     this.setState({ newRepo: e.target.value });
@@ -54,9 +69,12 @@ class Main extends Component {
         </Form>
 
         <List>
-          {repositories.map(repositories => (
-            <li key={repositories.name}>
-              <span>{repositories.name}</span>
+          {repositories.map(repository => (
+            <li key={repository.name}>
+              <span>{repository.name}</span>
+              <Link to={`/repo/${encodeURIComponent(repository.name)}`}>
+                Detalhes
+              </Link>
             </li>
           ))}
         </List>
